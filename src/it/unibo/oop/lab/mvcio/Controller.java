@@ -1,10 +1,45 @@
 package it.unibo.oop.lab.mvcio;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+
 /**
  * 
  */
 public class Controller {
+    private static final String HOME = System.getProperty("user.home");
+    private static final String SEPARATOR = System.getProperty("file.separator");
+    private static final String DEFAULT_FILE = "output.txt";
 
+    private final File dest = new File(HOME + SEPARATOR + DEFAULT_FILE);
+    /**
+     * @return the current file
+     */
+    public File getFile() {
+        return this.dest;
+    }
+    /**
+     * @return the current file path
+     */
+    public String getPath() {
+        return this.dest.getPath();
+    }
+    /**
+     * Saves some text on the designed file.
+     * 
+     * @param text
+     *            the text to save
+     * @throws IOException
+     *             if the writing fails
+     */
+    public void save(final String text) throws IOException {
+        try (PrintStream p = new PrintStream(this.dest.getPath())) {
+            p.print(text);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /*
      * This class must implement a simple controller responsible of I/O access. It
      * considers a single file at a time, and it is able to serialize objects in it.
