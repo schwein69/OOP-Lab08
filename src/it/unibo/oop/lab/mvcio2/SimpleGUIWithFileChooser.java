@@ -1,11 +1,85 @@
 package it.unibo.oop.lab.mvcio2;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import it.unibo.oop.lab.mvcio.Controller;
+
+
 /**
  * A very simple program using a graphical interface.
  * 
  */
 public final class SimpleGUIWithFileChooser {
-
+    private final JFrame frame = new JFrame("Interface");
+    public SimpleGUIWithFileChooser(final Controller ctrl) {
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        final JPanel jp = new JPanel(new BorderLayout());
+        final JTextArea ta = new JTextArea();
+        final JButton but = new JButton("SAVE");
+        jp.add(but, BorderLayout.SOUTH);
+        jp.add(ta, BorderLayout.CENTER);
+        but.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                try {
+                    ctrl.save(ta.getText());
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }); 
+        final JPanel j2 = new JPanel();
+        final JTextField jt = new JTextField(ctrl.getPath());
+        final JButton jb = new JButton("Browse...");
+        jt.setEditable(false);
+        jb.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                // TODO Auto-generated method stub 
+                final JFileChooser chos = new JFileChooser();
+                chos.setSelectedFile(ctrl.getFile());
+                final int result = chos.showSaveDialog(frame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    ctrl.setFile(chos.getSelectedFile());
+                    jt.setText(ctrl.getPath());
+                } else if (result == JFileChooser.CANCEL_OPTION) {
+                    System.out.println("");
+                } else {
+                    JOptionPane.showMessageDialog(frame, result, "NOPE!", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        jp.add(j2, BorderLayout.NORTH);
+        j2.add(jt, BorderLayout.CENTER);
+        j2.add(jb, BorderLayout.AFTER_LINE_ENDS);
+        frame.setContentPane(jp);
+        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        final int sw = (int) screen.getWidth();
+        final int sh = (int) screen.getHeight();
+        frame.setSize(sw / 2, sh / 2);
+        //frame.pack();
+        frame.setLocationByPlatform(true);
+    }
+    private void display() {
+        frame.setVisible(true);
+    }
+    public static void main(final String... args) {
+        final SimpleGUIWithFileChooser gui = new SimpleGUIWithFileChooser(new Controller()); 
+        gui.display();
+     }
     /*
      * TODO: Starting from the application in mvcio:
      * 

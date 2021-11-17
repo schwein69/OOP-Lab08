@@ -12,7 +12,10 @@ public class Controller {
     private static final String SEPARATOR = System.getProperty("file.separator");
     private static final String DEFAULT_FILE = "output.txt";
 
-    private final File dest = new File(HOME + SEPARATOR + DEFAULT_FILE);
+    private File dest = new File(HOME + SEPARATOR + DEFAULT_FILE);
+    public void setFile(final File dest) {
+        this.dest = dest;
+    }
     /**
      * @return the current file
      */

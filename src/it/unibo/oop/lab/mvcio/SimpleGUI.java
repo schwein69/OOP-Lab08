@@ -50,7 +50,7 @@ public final class SimpleGUI {
         final JTextArea ta = new JTextArea();
         final JButton but = new JButton("SAVE");
         jp.add(but, BorderLayout.SOUTH);
-        jp.add(ta, BorderLayout.NORTH);
+        jp.add(ta, BorderLayout.CENTER);
         but.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent arg0) {
@@ -82,7 +82,7 @@ public final class SimpleGUI {
          * flag makes the OS window manager take care of the default positioning
          * on screen. Results may vary, but it is generally the best choice.
          */
-        frame.pack();
+        //frame.pack();
         frame.setLocationByPlatform(true);
     }
     private void display() {
