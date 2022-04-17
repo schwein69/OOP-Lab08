@@ -17,9 +17,9 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
      * private static final int MIN = 0; private static final int MAX = 100; private
      * static final int ATTEMPTS = 10;
      */
-    public static final int DMIN = 1;
-    public static final int DMAX = 100;
-    public static final int DNCHANCE = 10;
+    private static final int DMIN = 1;
+    private static final int DMAX = 100;
+    private static final int DNCHANCE = 10;
     private final DrawNumber model;
     private final List<DrawNumberView> views;
     private final Configuration confg = new Configuration(DMIN, DMAX, DNCHANCE);
